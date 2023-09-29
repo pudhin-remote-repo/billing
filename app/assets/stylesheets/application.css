@@ -159,6 +159,16 @@ input[type="email"].error
 {
     border-color: #ff0000;
 }
+.container {
+    margin-left: 0;
+    margin-right: 0;
+}
 
-
+/* Media query for large screens */
+@media (min-width: 768px) {
+    .container {
+        margin-left: 200px;
+        margin-right: 200px;
+    }
+}
 

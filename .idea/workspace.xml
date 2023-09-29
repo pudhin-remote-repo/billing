@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a1c0537-2735-4011-9a3e-c5a8019ce730" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/application.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/application.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/bills/_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/bills/_form.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/bills/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/bills/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/bills/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/bills/show.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +53,7 @@
       <updated>1695977714523</updated>
       <workItem from="1695977719580" duration="10000" />
       <workItem from="1695977744474" duration="990000" />
-      <workItem from="1695979522038" duration="988000" />
+      <workItem from="1695979522038" duration="1571000" />
     </task>
     <servers />
   </component>
