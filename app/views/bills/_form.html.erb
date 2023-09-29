@@ -12,9 +12,9 @@
 
     <!-- Bill items add and remove block using nested attributes, "bill_items_attributes" -->
     <div>
-      <div  style="display: flex; justify-content: space-between;">
+      <div style="display: flex; gap: 350px">
         <h3>Bill Section</h3>
-        <button type="button" id="add-product" class="my-button" style="align-items:end; height: 50%; margin-top: 10px">Add New</button>
+        <button type="button" id="add-product" class="my-button" style="height: 50%; margin-top: 10px">Add New</button>
       </div>
       <div id="products-section" style="padding: 15px">
         <div class="product-fields">
@@ -46,8 +46,8 @@
   </div>
 
   <div class="last-block">
-    <div style="display: flex; justify-content: space-between; gap: 20px;">
-      <div class="fields" style="flex: 1;">
+    <div style="display: flex; gap: 20px;">
+      <div class="fields">
         <!-- Customer paid amount input field, value automatically set based on denomination count -->
         <%= form.label :cash_paid_by_customer %>
         <%= form.text_field :customer_paid_amount, type: 'number', require: true, class: 'field-style',style: 'background-color: #f3f4fa' %>
