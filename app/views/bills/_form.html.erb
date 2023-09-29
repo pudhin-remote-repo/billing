@@ -1,0 +1,127 @@
+<%= form_with(model: bill) do |form| %>
+
+  <div class="first-block">
+
+    <h3>Billing System</h3>
+    <div class="field" style="padding: 10px">
+      <%= form.label :customer_email %>
+      <%= form.email_field :customer_email, required: true, style: 'background-color: #f3f4fa' %>
+    </div>
+    <div class="split-line"></div>
+
+
+    <!-- Bill items add and remove block using nested attributes, "bill_items_attributes" -->
+    <div>
+      <div  style="display: flex; justify-content: space-between;">
+        <h3>Bill Section</h3>
+        <button type="button" id="add-product" class="my-button" style="align-items:end; height: 50%; margin-top: 10px">Add New</button>
+      </div>
+      <div id="products-section" style="padding: 15px">
+        <div class="product-fields">
+          <%= select_tag "bill[bill_items_attributes][1][product_id]", options_from_collection_for_select(Product.all, :id, :name), include_blank: 'Select a Product', required: true, style: "padding:5px;background-color: #f3f4fa" %>
+          <%= number_field_tag "bill[bill_items_attributes][1][quantity]", nil, required: true, step: 'any', placeholder: 'Quantity', style: "padding:5px; background-color: #f3f4fa;" %>
+          <button type="button" class="remove-product delete-button" style="padding:5px">Delete</button>
+          <br>
+        </div>
+      </div>
+    </div>
+    <div class="split-line"></div>
+
+    <!-- Denomination user input block-->
+    <div>
+      <h3>Denomination</h3>
+      <div class="form-group">
+        <div class="denomination-group">
+          <!-- Denomination currency available in shop -->
+          <% @denomination_currency.each do |denomination_value| %>
+            <div class="denomination">
+              <label for="denomination_<%= denomination_value %>"><%= denomination_value %></label>
+              <input type="number" name="denominations[<%= denomination_value %>]" id="denomination_<%= denomination_value %>" class="form-control" style="background-color: #f3f4fa;">
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="last-block">
+    <div style="display: flex; justify-content: space-between; gap: 20px;">
+      <div class="fields" style="flex: 1;">
+        <!-- Customer paid amount input field, value automatically set based on denomination count -->
+        <%= form.label :cash_paid_by_customer %>
+        <%= form.text_field :customer_paid_amount, type: 'number', require: true, class: 'field-style',style: 'background-color: #f3f4fa' %>
+      </div>
+      <!-- Action block for bill -->
+      <div>
+        <%= form.button "Cancel", type: "reset", class: "cancel-button" %>
+      </div>
+      <div>
+        <%= form.submit 'Generate Bill' , class: 'my-button'%>
+      </div>
+    </div>
+
+  </div>
+
+
+<% end %>
+
+
+
+<script>
+    $(document).ready(function () {
+        const productsSection = $("#products-section"); //get products section block with id
+
+        // Counter to keep track of added products fields start by 2, because statically set first item fields
+        let productCounter = 2;
+        //add products fields dynamically
+        $("#add-product").click(function () {
+            productCounter++;
+            //html content for dynamically items add
+            const productField = `
+                <div class="product-fields">
+                  <%= select_tag "bill[bill_items_attributes][${productCounter}][product_id]", options_from_collection_for_select(Product.all, :id, :name),include_blank: 'Select a Product', required: true, style: "padding:5px;background-color: #f3f4fa" %>
+                  <%= number_field_tag "bill[bill_items_attributes][${productCounter}][quantity]", nil, required: true, step: 'any',placeholder: 'Quantity', style: "padding:5px;background-color: #f3f4fa;" %>
+                  <button type="button" class="remove-product delete-button" style="padding:5px">Delete</button>
+                   <br>
+                 </div>`;
+
+            productsSection.append(productField);
+
+            //remove the products fields dynamically
+            $(".remove-product").click(function () {
+                $(this).parent().remove();
+            });
+        });
+
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        const denomination_currency = <%= @denomination_currency %>;
+
+        // Function to calculate the total based on denomination values
+        function calculateTotal() {
+            let total = 0;
+
+            // Loop through the denomination values and sum the amounts
+
+            denomination_currency.forEach(function (denomination_value) {
+                const inputField = $(`#denomination_${denomination_value}`);
+                const amount = parseFloat(inputField.val()) || 0; // Convert input to a number or default to 0
+                total += amount * denomination_value;
+            });
+
+            // Update the customer paid amount field with the calculated total
+            const customerPaidField = $("#bill_customer_paid_amount");
+            customerPaidField.val(total.toFixed(2)); // Set the value with 2 decimal places
+        }
+
+        // Attach an input event listener to each denomination input field
+        denomination_currency.forEach(function (denomination_value) {
+            const inputField = $(`#denomination_${denomination_value}`);
+            inputField.on("input", calculateTotal);
+        });
+    });
+</script>

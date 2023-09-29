@@ -1,0 +1,79 @@
+  <div style="text-align: left; margin: 0 auto; width: 60%;">
+    <div class="first-block">
+      <h3>Billing System</h3>
+      <div class="main-div" style="margin: 10px">
+        <div style="display: flex; justify-content: space-between;">
+          <p><strong>Customer Email :</strong> <%= @bill.customer.email %></p>
+          <p style="text-align: right;"><strong>Bill Date :</strong> <%= @bill.bill_date %></p>
+        </div>
+      </div>
+      <div class="split-line"></div>
+      <div class="main-div" >
+        <h3>Bill Section</h3>
+
+        <table style="margin: 10px; padding: 20px;">
+          <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Purchased price</th>
+            <th>Tax % for item</th>
+            <th>Tax payable for item</th>
+            <th>Total price of the item</th>
+          </tr>
+          </thead>
+
+          <!-- List the all items for particular bill -->
+          <tbody>
+          <% @bill_items.each do |bill_items| %>
+            <tr style="background-color: #f3f4fa;">
+              <td style="text-align: left; font-weight: bold"><%= bill_items.product.name %></td>
+              <td><%= format("%.2f", bill_items.item_price) %></td>
+              <td><%= format("%.2f", bill_items.quantity) %></td>
+              <td><%= format("%.2f", bill_items.item_price * bill_items.quantity) %></td>
+              <td><%= format("%.2f", bill_items.item_tax_rate) %> %</td>
+              <td><%= format("%.2f", bill_items.item_tax) %></td>
+              <td style="font-weight: bold"><%= format("%.2f", (bill_items.item_price * bill_items.quantity + bill_items.item_tax)) %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="split-line"></div>
+
+      <div class="main-div">
+        <h3>Balance Denominations</h3>
+        <div class="denomination-group">
+          <% @denomination_hash.each do |denomination_value, count| %>
+            <div class="denomination">
+              <label for="denomination_<%= denomination_value %>"><%= denomination_value %></label>
+              <input type="number" name="denominations[<%= denomination_value %>]" id="denomination_<%= denomination_value %>" class="form-control" value="<%= count %>" style="background-color: #f3f4fa;" readonly>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+    <div class="final-block">
+      <div>
+        <p>Total price without tax : </p>
+        <p>Total tax payable : </p>
+        <p>Net price of the purchased item : </p>
+        <p>Round down value of purchased item net price : </p>
+        <p>Balance payable to the customer : </p>
+      </div>
+      <div style="text-align: right; margin-right: 10px" >
+        <p class="amount"><%= format("%.2f", @bill.total_amount) %></p>
+        <p class="amount"><%= format("%.2f", @bill.total_tax) %></p>
+        <p class="amount"><%= format("%.2f", @bill.total_amount + @bill.total_tax) %></p>
+        <p class="amount"><%= format("%.2f", (@bill.total_amount + @bill.total_tax).round(0)) %></p>
+        <p class="amount"><%= @balance_amount %></p>
+
+      </div>
+    </div>
+
+  </div>
+
+  <%= link_to 'Back', bills_path %>
